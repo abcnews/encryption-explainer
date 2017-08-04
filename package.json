@@ -15,5 +15,12 @@
   },
   "aunty": {
     "type": "basic-story"
+  },
+  "dependencies": {
+    "@tweenjs/tween.js": "^17.1.0",
+    "bel": "^5.0.2",
+    "kbpgp": "^2.0.73",
+    "promise-polyfill": "^6.0.2",
+    "util-identifier": "^1.0.2"
   }
 }
