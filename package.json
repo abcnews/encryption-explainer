@@ -11,16 +11,33 @@
     "start": "npm install && aunty serve --debug"
   },
   "devDependencies": {
-    "@abcnews/aunty": "2.2.x"
+    "@abcnews/aunty": "4.0.x",
+    "@abcnews/webpacker": "^1.0.0",
+    "prettier": "^1.5.3"
   },
   "aunty": {
-    "type": "basic-story"
+    "serve": {
+      "port": "8001"
+    }
   },
   "dependencies": {
-    "@tweenjs/tween.js": "^17.1.0",
+    "babel-plugin-transform-react-jsx": "^6.24.1",
     "bel": "^5.0.2",
+    "domready": "^1.0.8",
     "kbpgp": "^2.0.73",
+    "preact": "^8.2.1",
+    "preact-compat": "^3.16.0",
     "promise-polyfill": "^6.0.2",
     "util-identifier": "^1.0.2"
+  },
+  "babel": {
+    "plugins": [
+      [
+        "transform-react-jsx",
+        {
+          "pragma": "h"
+        }
+      ]
+    ]
   }
 }
