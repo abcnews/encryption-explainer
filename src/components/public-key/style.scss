@@ -1,0 +1,75 @@
+.container {
+  max-width: 400px;
+  transition: opacity 0.5s;
+
+  .publickey {
+    transition: all 0.5s;
+    margin-bottom: 0;
+    max-height: 1200px;
+  }
+
+  &.visible {
+    opacity: 1;
+    z-index: 2;
+  }
+
+  &.collapse {
+    .publickey {
+      max-height: 5em;
+      position: relative;
+      &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 20px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+      }
+    }
+  }
+
+  > * {
+    margin: 20px;
+  }
+
+  pre {
+    max-width: 400px;
+    max-height: 100%;
+    padding: 20px;
+    background: #fff;
+    height: auto;
+    width: auto;
+    overflow: hidden;
+    transition: all 0.5s;
+  }
+}
+
+.plus {
+  text-align: center;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.message {
+  font-family: monospace;
+  max-width: 400px;
+  max-height: 100%;
+  padding: 20px;
+  background: #fff;
+  height: auto;
+  width: auto;
+}
+
+.encrypted {
+  word-wrap: break-word;
+}
+
+.encryption-container {
+  transition: all 0.5s;
+  opacity: 1;
+  margin-top: 0;
+  &.hide {
+    opacity: 0;
+  }
+}

@@ -6,7 +6,7 @@ const kbpgp = new Promise(resolve => {
       clearInterval(t);
       resolve(window.kbpgp);
     }
-  }, 10);
+  }, 1);
 });
 
 module.exports = kbpgp.then(kbpgp => {
@@ -35,22 +35,15 @@ module.exports = kbpgp.then(kbpgp => {
       (err, kp) => {
         kp.sign({}, err => {
           let privateKey = new Promise((resolve, reject) => {
-            kp.export_pgp_private(
-              {},
-              (err, key) => (err ? reject(err) : resolve(key))
-            );
+            kp.export_pgp_private({}, (err, key) => (err ? reject(err) : resolve(key)));
           });
           let publicKey = new Promise((resolve, reject) => {
-            kp.export_pgp_public(
-              {},
-              (err, key) => (err ? reject(err) : resolve(key))
-            );
+            kp.export_pgp_public({}, (err, key) => (err ? reject(err) : resolve(key)));
           });
-          Promise.all([
-            privateKey,
-            publicKey
-          ]).then(([privateKey, publicKey]) => {
+          Promise.all([privateKey, publicKey]).then(([privateKey, publicKey]) => {
             resolve({
+              kbpgp,
+              keyManager: kp,
               progressLog,
               privateKey,
               publicKey

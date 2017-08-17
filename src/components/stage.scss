@@ -3,4 +3,31 @@
   width: 100%;
   height: 100%;
   overflow: hidden;
+  position: relative;
+  z-index: 1;
+  transition: all 0.5s;
+
+  &.intercept {
+    background: rgb(255, 200, 200);
+  }
+
+  // Component default layouts
+  > * {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+  }
+}
+
+// Always hide the Nav-bar after scrolling away.
+:global {
+  .is-above .Nav-bar {
+    transform: translateY(-102%);
+  }
 }

@@ -1,6 +1,5 @@
 /** @jsx Preact.h */
 import Preact from 'preact';
-import key from './lib/crypto';
 import Stage from './components/stage';
 
 const container = document.querySelector('[data-encryption-explainer]');
@@ -10,27 +9,23 @@ const stage = container.querySelector('.scrollyteller-stage');
 document.querySelector('.interactive_support_msg').parentNode.remove();
 
 const init = e => {
-  // console.log('init', e.detail);
-  let stage = container.querySelector('.scrollyteller-stage');
+  let stage = e.target;
+
   Preact.render(
-    <Stage
-      container={container}
-      activated={e.detail.activated}
-      deactivated={e.detail.deactivated}
-    />,
-    stage
+    <Stage container={container} activated={e.detail.activated} deactivated={e.detail.deactivated} />,
+    stage,
+    stage.lastChild
   );
-  container.removeEventListener('mark', init);
+
+  document.removeEventListener('mark', init);
 };
 
 // Initialise
 if (stage) {
-  // console.log('stage already set');
+  // console.log('stages already set');
   init({
-    detail: {
-      activated: stage.__SCROLLYTELLER__.activated,
-      deactivated: stage.__SCROLLYTELLER__.deactivated
-    }
+    target: stage,
+    detail: stage.__SCROLLYTELLER__
   });
 } else {
   // console.log('waiting for the stage');
