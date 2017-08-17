@@ -13,6 +13,7 @@ export default class PublicKey extends Preact.Component {
 
   componentWillMount() {
     key.then(({ publicKey, keyManager, kbpgp }) => {
+      // publicKey = publicKey.replace(/Version:[^\n]*\n/, '').replace(/Comment:[^\n]*\n/, '');
       this.setState({ publicKey });
     });
   }
@@ -26,7 +27,7 @@ export default class PublicKey extends Preact.Component {
       <div className={classNames.join(' ')}>
         <h2>{`My public key`}</h2>
         <pre className={style.publickey}>
-          {this.state.publicKey}
+          {(this.state.publicKey || '').replace(/Version:[^\n]*\n/, '').replace(/Comment:[^\n]*\n/, '')}
         </pre>
         <EncryptMessage message={this.props.message} activated={this.props.activated} />
       </div>
@@ -80,7 +81,7 @@ class EncryptMessage extends Preact.Component {
         </div>
         <div className={style.plus}> = </div>
         <div className={`${style.message} ${style.encrypted}`}>
-          {this.state.encryptedMessage}
+          {(this.state.encryptedMessage || '').replace(/Version:[^\n]*\n/, '').replace(/Comment:[^\n]*\n/, '')}
         </div>
       </div>
     );
