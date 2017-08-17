@@ -96,8 +96,11 @@ export default class SecretInput extends Preact.Component {
           this.responseMessage.status = 'Sending...';
           this.responseMessage.encrypted = '[encrypted]';
           break;
-        default:
+        case 'prompt3':
+        case 'generate':
           this.responseMessage.status = 'Encrypting...';
+          this.responseMessage.encrypted = false;
+          break;
       }
     }
 

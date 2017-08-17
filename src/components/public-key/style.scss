@@ -6,6 +6,15 @@
     transition: all 0.5s;
     margin-bottom: 0;
     max-height: 1200px;
+    max-width: 400px;
+    max-height: 100%;
+    padding: 20px;
+    background: #fff;
+    height: auto;
+    width: auto;
+    overflow: hidden;
+    font-family: monospace;
+    word-wrap: break-word;
   }
 
   &.visible {
@@ -31,45 +40,5 @@
 
   > * {
     margin: 20px;
-  }
-
-  pre {
-    max-width: 400px;
-    max-height: 100%;
-    padding: 20px;
-    background: #fff;
-    height: auto;
-    width: auto;
-    overflow: hidden;
-    transition: all 0.5s;
-  }
-}
-
-.plus {
-  text-align: center;
-  font-size: 40px;
-  font-weight: bold;
-}
-
-.message {
-  font-family: monospace;
-  max-width: 400px;
-  max-height: 100%;
-  padding: 20px;
-  background: #fff;
-  height: auto;
-  width: auto;
-}
-
-.encrypted {
-  word-wrap: break-word;
-}
-
-.encryption-container {
-  transition: all 0.5s;
-  opacity: 1;
-  margin-top: 0;
-  &.hide {
-    opacity: 0;
   }
 }
