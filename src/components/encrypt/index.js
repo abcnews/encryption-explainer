@@ -10,27 +10,46 @@ export default class EncryptMessage extends Preact.Component {
     this.activated = activated.bind(this);
   }
 
-  componentDidMount() {
-    key.then(({ publicKey, keyManager, kbpgp }) => {
-      let idx = 0;
+  componentDidMount() {}
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.message !== this.props.message) {
+      let idx = 1;
+      let jdx = 0;
+      let msg = nextProps.message;
+      let log = [];
 
       let encryptLoop = () => {
         if (!this.activated(['publickeycollapsed', 'encrypt', 'transit'])) {
           requestAnimationFrame(() => (this.timer = setTimeout(encryptLoop, 150)));
           return;
         }
-        let msg = this.props.message;
-        idx = idx === msg.length ? 1 : idx + 1;
-        let substr = msg.slice(0, idx);
-        kbpgp.box({ msg: substr, encrypt_for: keyManager }, (err, encryptedMessage) => {
-          this.setState({ encryptedMessage, plainMessage: substr });
-        });
+
+        let { plainMessage, encryptedMessage } = log[jdx];
+        this.setState({ encryptedMessage, plainMessage });
+        jdx = ++jdx === log.length ? 0 : jdx;
 
         // in an animation frame so the timer stops when tab not in use
-        requestAnimationFrame(() => (this.timer = setTimeout(encryptLoop, idx === msg.length ? 5000 : 150)));
+        requestAnimationFrame(() => (this.timer = setTimeout(encryptLoop, jdx === 0 ? 5000 : 150)));
       };
-      this.timer = setTimeout(encryptLoop, 150);
-    });
+
+      let encrypt = plainMessage => {
+        key.then(({ publicKey, keyManager, kbpgp }) => {
+          kbpgp.box({ msg: plainMessage, encrypt_for: keyManager }, (err, encryptedMessage) => {
+            log.push({ encryptedMessage, plainMessage });
+            if (idx++ === msg.length) {
+              this.props.setEncryptedMessage(encryptedMessage);
+              encryptLoop();
+            } else {
+              encrypt(msg.slice(0, idx));
+            }
+          });
+        });
+      };
+
+      clearTimeout(this.timer);
+      encrypt(msg.slice(0, idx));
+    }
   }
 
   componentWillUnmount() {

@@ -4,7 +4,11 @@ import style from './style.scss';
 import activated from '../../lib/activated';
 import MessageBubble from '../message-bubble';
 
-const defaultMessages = [{ text: 'tell me a secret', status: `${new Date().getHours()}:${new Date().getMinutes()}` }];
+const defaultMessages = [{ text: 'tell me a secret', status: getTime() }];
+
+function getTime() {
+  return `${new Date().getHours()}:${new Date().getMinutes()}`;
+}
 
 export default class SecretInput extends Preact.Component {
   constructor() {
@@ -53,7 +57,7 @@ export default class SecretInput extends Preact.Component {
       let messages = this.state.messages;
       messages.push({
         text: 'no really. i want your secrets...',
-        status: `${new Date().getHours()}:${new Date().getMinutes()}`
+        status: getTime()
       });
       this.setState({ messages });
     }
@@ -86,7 +90,8 @@ export default class SecretInput extends Preact.Component {
     let noSecrets = "I don't have any secrets.";
     let classNames = [style.secretInput];
 
-    if (this.activated(['prompt1', 'prompt2', 'prompt3', 'transit'])) classNames.push(style.visible);
+    if (this.activated(['prompt1', 'prompt2', 'prompt3', 'transit', 'decryptedmessage']))
+      classNames.push(style.visible);
     if (this.responded) classNames.push(style.responded);
 
     // Set the response message status
@@ -101,7 +106,16 @@ export default class SecretInput extends Preact.Component {
           this.responseMessage.status = 'Encrypting...';
           this.responseMessage.encrypted = false;
           break;
+        case 'decryptedmessage':
+          this.responseMessage.status = getTime();
+          this.responseMessage.encrypted = false;
+          break;
       }
+    }
+
+    console.log('this.props.displayInput', this.props.displayInput);
+    if (this.props.displayInput) {
+      classNames.push(style.displayInput);
     }
 
     return (

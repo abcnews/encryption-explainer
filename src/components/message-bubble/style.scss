@@ -3,13 +3,13 @@ $bubble-background-right: linear-gradient(180deg, rgb(200, 255, 200), rgb(190, 2
 
 .bubble-container {
   position: relative;
+  max-width: 400px;
 }
 
 .bubble-inner {
   position: relative;
   margin: 10px 50px 10px 20px;
   z-index: 1;
-  max-width: 400px;
   margin: 30px;
   transition: opacity 0.5s;
   opacity: 1;

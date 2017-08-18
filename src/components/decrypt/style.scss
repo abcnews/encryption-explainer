@@ -1,0 +1,76 @@
+.container {
+  max-width: 400px;
+  max-height: 100vh;
+  transition: opacity 0.5s;
+
+  &.visible {
+    opacity: 1;
+    z-index: 2;
+  }
+
+  > * {
+    margin: 20px;
+  }
+}
+
+.eq,
+.plus {
+  text-align: center;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.message {
+  font-family: monospace;
+  max-height: 1200px;
+  padding: 20px;
+  background: #fff;
+  height: auto;
+  width: auto;
+  transition: all 0.5s;
+  overflow: hidden;
+  transition: all 0.5s;
+
+  &.collapsed {
+    max-height: 5em;
+  }
+}
+
+.active-generate,
+.active-intercept2,
+.active-transit,
+.active-privatekey {
+  .plus,
+  .eq,
+  .encrypted,
+  .decrypted {
+    opacity: 0;
+  }
+}
+
+.active-generate,
+.active-intercept2,
+.active-transit,
+.active-encrypted {
+  .eq,
+  .decrypted {
+    opacity: 0;
+  }
+
+  .privatekey {
+    max-height: 5em;
+  }
+}
+
+.active-decryptedmessage,
+.active-decrypted {
+  .privatekey,
+  .encrypted {
+    max-height: 5em;
+  }
+}
+
+.privatekey,
+.encrypted {
+  word-wrap: break-word;
+}

@@ -30,4 +30,22 @@
   .is-above .Nav-bar {
     transform: translateY(-102%);
   }
+
+  .init-interactive[data-encryption-explainer] {
+    .Block-content {
+      margin-bottom: 40vh;
+      margin-top: 40vh;
+    }
+
+    .Block-content:nth-child(2) {
+      margin-top: 100vh;
+    }
+
+    .Block-content:last-child {
+      margin-bottom: 100vh;
+    }
+    .is-piecemeal > .Block-content::before {
+      background-color: rgba(0, 0, 0, 0.8);
+    }
+  }
 }

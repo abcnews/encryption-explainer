@@ -5,6 +5,10 @@
   &.visible {
     opacity: 1;
     z-index: 2;
+
+    .input-container {
+      // opacity: 1;
+    }
   }
 
   &.raised {
@@ -27,6 +31,14 @@
 .responded .input-container {
   max-height: 0;
   opacity: 0;
+  padding: 0;
+}
+
+.display-input {
+  .input-container {
+    opacity: 1;
+    transition-delay: 0;
+  }
 }
 
 .input-container {
@@ -40,10 +52,13 @@
   border-width: 1px 0 0 0;
   border-color: #aaa;
   background: #fff;
-  position: absolute;
+  position: fixed;
   bottom: 0;
   transition: all 0.5s;
   z-index: 2;
+  opacity: 0;
+  transition: opacity 0.2s;
+  transition-delay: 1s;
 
   > div {
     max-width: 400px;

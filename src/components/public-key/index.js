@@ -19,19 +19,28 @@ export default class PublicKey extends Preact.Component {
 
   render() {
     let classNames = [style.container];
-    if (this.activated(['publickey', 'publickeycollapsed', 'encrypt'])) classNames.push(style.visible);
-    if (this.activated(['encrypt', 'publickeycollapsed', 'transit'])) classNames.push(style.collapse);
+
+    if (this.activated(['publickey', 'encrypt'])) classNames.push(style.visible);
+    if (this.activated(['encrypt', 'transit'])) classNames.push(style.collapse);
+
+    let title = this.activated(['publickey']) ? 'My public key' : 'Encrypting...';
 
     return (
       <div className={classNames.join(' ')}>
-        <h2>{`My public key`}</h2>
+        <h2>
+          {title}
+        </h2>
         <div className={style.publickey}>
           {(this.state.publicKey || '')
             .replace(/Version:[^\n]*\n/, '')
             .replace(/Comment:[^\n]*\n/, '')
             .replace(/\n/g, '')}
         </div>
-        <EncryptMessage message={this.props.message} activated={this.props.activated} />
+        <EncryptMessage
+          message={this.props.message}
+          activated={this.props.activated}
+          setEncryptedMessage={this.props.setEncryptedMessage}
+        />
       </div>
     );
   }
