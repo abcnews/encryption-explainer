@@ -1,5 +1,6 @@
 /** @jsx Preact.h */
 import Preact from 'preact';
+import './index.scss';
 
 const container = document.querySelector('[data-encryption-explainer]');
 const stage = container.querySelector('.scrollyteller-stage');
@@ -39,6 +40,7 @@ if (module.hot) {
 
   // If a new app build is detected try rendering it
   module.hot.accept('./components/stage', () => {
+    const stage = container.querySelector('.scrollyteller-stage');
     setTimeout(() => {
       init({
         target: stage,
