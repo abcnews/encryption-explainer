@@ -4,21 +4,15 @@
   "description": "A basic ABC News story.",
   "license": "MIT",
   "private": true,
-  "contributors": [
-    "Simon Elvery <simon@elvery.net>"
-  ],
+  "contributors": ["Simon Elvery <simon@elvery.net>"],
   "scripts": {
     "start": "npm install && aunty serve --debug"
   },
   "devDependencies": {
-    "@abcnews/aunty": "^4.2.4",
+    "@abcnews/aunty": "^5.1.1",
     "prettier": "^1.5.3"
   },
-  "aunty": {
-    "serve": {
-      "port": "8001"
-    }
-  },
+  "aunty": {},
   "dependencies": {
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "bel": "^5.0.2",

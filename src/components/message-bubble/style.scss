@@ -1,5 +1,5 @@
-$bubble-background: linear-gradient(180deg, #fff, #eee);
-$bubble-background-right: linear-gradient(180deg, rgb(200, 255, 200), rgb(190, 230, 190));
+$bubble-background: #ebfbff;
+$bubble-background-right: #fff2eb;
 
 .bubble-container {
   position: relative;
@@ -22,77 +22,42 @@ $bubble-background-right: linear-gradient(180deg, rgb(200, 255, 200), rgb(190, 2
     background: $bubble-background-right;
   }
 
-  &.left::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    bottom: 0px;
-    left: -14px;
-    height: 19px;
-    border-left: 80px solid #fff;
-    background: #fff;
-    border-bottom-left-radius: 98px 30px;
-    transform: translate(0, -7px) rotate(-25deg);
-    width: 30px;
-    box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.3);
-  }
-
   &.left::after {
     content: "";
     position: absolute;
-    z-index: -1;
-    bottom: 15px;
-    left: 0%;
-    width: 60px;
-    height: 30px;
-    background: #e0d8ce;
-    border-bottom-left-radius: 40px 50px;
-    transform: translate(-38px, 3px) rotate(-52deg);
-  }
-
-  &.right::before {
-    content: "";
-    position: absolute;
-    z-index: -1;
-    bottom: 0px;
-    right: -14px;
-    height: 19px;
-    border-right: 80px solid rgb(200, 255, 200);
-    background: rgb(200, 255, 200);
-    border-bottom-right-radius: 250px 98px;
-    transform: translate(0, -7px) rotate(25deg);
-    width: 30px;
-    box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.3);
+    top: 0;
+    left: -17px;
+    width: 0;
+    height: 0;
+    border-right: 19px solid $bubble-background;
+    border-bottom: 20px solid transparent;
   }
 
   &.right::after {
     content: "";
     position: absolute;
-    z-index: -1;
-    bottom: 15px;
-    right: 0%;
-    width: 60px;
-    height: 30px;
-    background: #e0d8ce;
-    border-bottom-right-radius: 40px 50px;
-    transform: translate(38px, 3px) rotate(52deg);
+    top: 0;
+    right: -17px;
+    width: 0;
+    height: 0;
+    border-left: 19px solid $bubble-background-right;
+    border-bottom: 20px solid transparent;
   }
 }
 
 .status {
-  position: absolute;
-  bottom: -20px;
-  right: 50px;
+  width: 100%;
+  text-align: right;
   font-size: 12px;
   font-family: Arial;
 }
 
 .bubble {
-  border-radius: 15px;
+  border-radius: 3px;
   background: $bubble-background;
-  padding: 15px;
+  padding: 12px;
   text-transform: none;
   font-weight: normal;
   font-size: 16px;
-  box-shadow: 0 2px 10px -2px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 20px 20px -10px #1b3c43;
 }
