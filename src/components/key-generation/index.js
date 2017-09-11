@@ -3,6 +3,10 @@ import Preact from 'preact';
 import style from './style.scss';
 import key from '../../lib/crypto';
 import activated from '../../lib/activated';
+import CodeBox from '../code-box';
+import Frame from '../frame';
+import iconCode from '../images/code.svg';
+import iconSafe from '../images/safe.svg';
 
 class KeyGeneration extends Preact.Component {
   constructor() {
@@ -48,17 +52,33 @@ class KeyGeneration extends Preact.Component {
     }
   }
 
-  render() {
-    let classNames = [style.container];
-    if (this.activated(['generate'])) classNames.push(style.visible);
+  render(props, { keyLogItem }) {
+    let visible = this.activated(['generate', 'intercept2']);
 
     return (
-      <div className={classNames.join(' ')}>
-        <h2>Generating a key-pair</h2>
-        <pre className={style.log}>
-          {this.state.keyLogItem || ''}
-        </pre>
-      </div>
+      <Frame visible={visible} type="technical">
+        <div className={style.container}>
+          <h2>Generating a key-pair</h2>
+          <CodeBox code={keyLogItem} />
+          <div className={style.illo}>
+            <div>
+              <img className={style.image} src={iconSafe} alt="Illustration of a safe" />
+            </div>
+            <div className={style.joiner}>
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+            </div>
+            <div>
+              <img className={style.image} src={iconCode} alt="Illustration of password or keycode" />
+            </div>
+          </div>
+        </div>
+      </Frame>
     );
   }
 }

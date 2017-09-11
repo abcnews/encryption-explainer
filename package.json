@@ -4,7 +4,9 @@
   "description": "A basic ABC News story.",
   "license": "MIT",
   "private": true,
-  "contributors": ["Simon Elvery <simon@elvery.net>"],
+  "contributors": [
+    "Simon Elvery <simon@elvery.net>"
+  ],
   "scripts": {
     "start": "npm install && aunty serve --debug"
   },
@@ -16,11 +18,13 @@
   "dependencies": {
     "babel-plugin-transform-react-jsx": "^6.24.1",
     "bel": "^5.0.2",
+    "classnames": "^2.2.5",
     "domready": "^1.0.8",
     "kbpgp": "^2.0.73",
     "preact": "^8.2.1",
     "preact-compat": "^3.16.0",
     "promise-polyfill": "^6.0.2",
+    "smoothscroll-polyfill": "^0.3.6",
     "util-identifier": "^1.0.2"
   },
   "babel": {

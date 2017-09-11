@@ -6,45 +6,27 @@
   z-index: 1;
   transition: all 0.5s;
 
-  &.intercept {
-    background: rgb(255, 200, 200);
+  &:after {
+    content: "";
+    z-index: 2;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    pointer-events: none;
+    transition: background-color 0.2s;
   }
 
-  // Component default layouts
-  > * {
-    position: absolute;
-    z-index: 1;
-    width: 100%;
-    padding: 0;
-    margin: 0;
-    opacity: 0;
-    overflow: hidden;
-    top: 0;
-    left: 0;
+  h2 {
+    text-align: center;
+    text-transform: none;
+    font-family: ABCSerif;
+    font-size: 22px;
+    color: #10414d;
+    line-height: 1.1em;
+    margin: 2em 0;
   }
 }
 
-// Always hide the Nav-bar after scrolling away.
-:global {
-  .is-above .Nav-bar {
-    transform: translateY(-102%);
-  }
-
-  .init-interactive[data-encryption-explainer] {
-    .Block-content {
-      margin-bottom: 40vh;
-      margin-top: 40vh;
-    }
-
-    .Block-content:nth-child(2) {
-      margin-top: 100vh;
-    }
-
-    .Block-content:last-child {
-      margin-bottom: 100vh;
-    }
-    .is-piecemeal > .Block-content::before {
-      background-color: rgba(0, 0, 0, 0.8);
-    }
-  }
+.intercept:after {
+  background: rgba(217, 48, 33, 0.5);
 }

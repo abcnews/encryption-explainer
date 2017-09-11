@@ -1,20 +1,108 @@
 .container {
-  transition: opacity 0.5s;
+  max-width: 400px;
+}
 
-  &.visible {
-    opacity: 1;
-    z-index: 2;
-  }
-
-  > * {
-    margin: 20px;
-  }
-
-  .log {
-    max-width: 400px;
-    padding: 20px;
-    background: #fff;
+.illo {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 50px 20px 0;
+  img {
+    width: 97px;
     height: auto;
-    width: auto;
+  }
+}
+
+.joiner span {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #f75f00;
+  margin: 0 3px;
+  animation-iteration-count: infinite;
+  animation-timing-function: ease-in;
+  animation-duration: 3s;
+
+  &:nth-child(1),
+  &:nth-child(7) {
+    animation-name: join4;
+  }
+
+  &:nth-child(2),
+  &:nth-child(6) {
+    animation-name: join3;
+  }
+
+  &:nth-child(3),
+  &:nth-child(5) {
+    animation-name: join2;
+  }
+
+  &:nth-child(4) {
+    animation-name: join1;
+  }
+}
+
+@keyframes join1 {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes join2 {
+  0% {
+    opacity: 0;
+  }
+  20% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes join3 {
+  0% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes join4 {
+  0% {
+    opacity: 0;
+  }
+  60% {
+    opacity: 0;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }

@@ -1,0 +1,49 @@
+.frame {
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  opacity: 0;
+  overflow: hidden;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  transition: all 1s;
+  z-index: 1;
+
+  > div {
+    max-width: 400px;
+    margin: 0 auto;
+    z-index: 3;
+    position: relative;
+  }
+}
+
+@media (min-width: 61.25rem) {
+  .frame > div {
+    transform: translate(-18.25rem, 0);
+  }
+}
+
+.visible {
+  opacity: 1;
+  z-index: 2;
+}
+
+.technical {
+  background-color: #eef6f7;
+  &::after {
+    background-image: url('../images/algorithms_pattern.svg');
+    background-size: 340px;
+    background-attachment: fixed;
+    content: "";
+    opacity: 0.3;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    z-index: 1;
+  }
+}

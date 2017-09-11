@@ -2,6 +2,8 @@
 import Preact from 'preact';
 import './index.scss';
 
+require('smoothscroll-polyfill').polyfill();
+
 const container = document.querySelector('[data-encryption-explainer]');
 const stage = container.querySelector('.scrollyteller-stage');
 

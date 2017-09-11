@@ -1,37 +1,26 @@
-.container {
-  max-width: 400px;
-  transition: opacity 0.5s;
-
-  > * {
-    margin: 20px;
-  }
+.publickey {
+  padding-top: 50px !important;
 }
 
-.plus {
+.operator {
   text-align: center;
-  font-size: 40px;
   font-weight: bold;
-}
-
-.message {
-  font-family: monospace;
-  max-width: 400px;
-  max-height: 100%;
-  padding: 20px;
-  background: #fff;
-  height: auto;
-  width: auto;
-}
-
-.encrypted {
-  word-wrap: break-word;
-}
-
-.encryption-container {
-  transition: all 0.5s;
+  font-size: 40px;
+  height: 40px;
+  line-height: 40px;
+  color: #10414d;
   opacity: 1;
-  margin-top: 0;
+  transition: opacity 0.5s;
   &.hide {
     opacity: 0;
   }
+}
+
+.safe {
+  width: 97px;
+  height: auto;
+  margin: 1em auto -50px;
+  z-index: 2;
+  display: block;
+  position: relative;
 }

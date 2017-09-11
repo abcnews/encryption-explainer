@@ -1,16 +1,10 @@
-.container {
-  max-width: 400px;
-  max-height: 100vh;
-  transition: opacity 0.5s;
-
-  &.visible {
-    opacity: 1;
-    z-index: 2;
-  }
-
-  > * {
-    margin: 20px;
-  }
+.codeIcon {
+  width: 97px;
+  height: auto;
+  margin: 1em auto -30px;
+  z-index: 2;
+  display: block;
+  position: relative;
 }
 
 .eq,
@@ -20,20 +14,15 @@
   font-weight: bold;
 }
 
-.message {
-  font-family: monospace;
-  max-height: 1200px;
-  padding: 20px;
-  background: #fff;
-  height: auto;
-  width: auto;
+.private-key.private-key {
   transition: all 0.5s;
-  overflow: hidden;
-  transition: all 0.5s;
+  padding-top: 50px;
+  margin: -30px auto 0;
+}
 
-  &.collapsed {
-    max-height: 5em;
-  }
+.illustration {
+  margin: 0 auto;
+  display: block;
 }
 
 .active-generate,
@@ -60,17 +49,4 @@
   .privatekey {
     max-height: 5em;
   }
-}
-
-.active-decryptedmessage,
-.active-decrypted {
-  .privatekey,
-  .encrypted {
-    max-height: 5em;
-  }
-}
-
-.privatekey,
-.encrypted {
-  word-wrap: break-word;
 }

@@ -1,98 +1,32 @@
-.secret-input {
-  height: 100%;
-  transition: all 0.5s;
+.form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
 
-  &.visible {
-    opacity: 1;
-    z-index: 2;
-
-    .input-container {
-      opacity: 1;
-    }
-  }
-
-  &.raised {
-    .input-container {
-      margin-bottom: calc(100vh);
-      transform: translate(0, 100%);
-      border-width: 0 0 1px 0;
-    }
-
-    .bubble-container {
-      opacity: 0;
-    }
-  }
-
-  .input-container {
-    margin: 0;
-  }
-}
-
-.responded .input-container {
-  max-height: 0;
-  opacity: 0;
-  padding: 0;
-}
-
-.display-input {
-  .input-container {
-    opacity: 1;
-    transition-delay: 0;
-  }
-}
-
-.input-container {
-  max-height: 500px;
-  overflow: hidden;
-  width: 100%;
-  padding: 10px;
-  box-sizing: border-box;
-  font-size: 1.4em;
-  border-style: solid;
-  border-width: 1px 0 0 0;
-  border-color: #aaa;
-  background: #fff;
-  position: fixed;
-  bottom: 0;
-  transition: all 0.5s;
-  z-index: 2;
-  opacity: 0;
-  transition: opacity 0.2s;
-  transition-delay: 1s;
-
-  > div {
-    max-width: 400px;
-  }
-
-  textarea {
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 5px;
-    width: 100%;
-    max-width: 420px;
+  .input {
+    min-width: 100%;
+    border: 1px solid #a2cdd8;
     resize: none;
+    border-radius: 3px;
     font-size: 16px;
+    padding: 10px 5px;
+    flex: 2;
   }
 
   button {
-    float: right;
-  }
-}
-
-.generate-button {
-  display: block;
-  background: none;
-  border: none;
-  font-weight: normal;
-  color: #666;
-  text-decoration: underline;
-  text-align: right;
-  max-width: 420px;
-  font-size: 0.8em;
-  transition: all 0.2s;
-  float: left;
-  &.hidden {
-    opacity: 0;
-    pointer-events: none;
+    background: #8fd7e8;
+    margin: 10px 0 0 0;
+    border: none;
+    height: 40px;
+    padding: 0 25px;
+    font-size: 12px;
+    color: #004d61;
+    font-family: ABCSans, Arial, sans-serif;
+    &.primary {
+      color: #2e3638;
+      font-weight: bold;
+      font-size: 14px;
+      background: #00d3ff;
+    }
   }
 }

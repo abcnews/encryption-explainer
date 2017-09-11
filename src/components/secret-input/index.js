@@ -3,12 +3,16 @@ import Preact from 'preact';
 import style from './style.scss';
 import activated from '../../lib/activated';
 import MessageBubble from '../message-bubble';
+import Frame from '../frame';
+import cx from 'classnames';
 
-const defaultMessages = [{ text: 'tell me a secret', status: getTime() }];
-
-function getTime() {
-  return `${new Date().getHours()}:${new Date().getMinutes()}`;
-}
+const prompts = ['tell me a secret', 'no really, i want your secrets'];
+const secrets = [
+  'i dropped my toothbrush in the 🚽 but used it anyway',
+  'i keep my toe nail clippings in a jar under the sink',
+  'i really like Nickelback',
+  "i don't actually need my glasses 👓"
+];
 
 export default class SecretInput extends Preact.Component {
   constructor() {
@@ -16,126 +20,129 @@ export default class SecretInput extends Preact.Component {
     this.activated = activated.bind(this);
     this.handleSecretCreation = this.handleSecretCreation.bind(this);
     this.onSendMessage = this.onSendMessage.bind(this);
-    this.prompted = false;
-    this.responded = false;
     this.responseMessage = null;
   }
 
   componentWillMount() {
-    this.setState({ messages: defaultMessages.slice() });
-    if (this.activated.idx > 0) {
-      this.prompt();
-    }
+    this.setState({ prompt: 1, responded: false, messages: prompts.slice(0, 1).map(p => ({ text: p })) });
+    this.componentWillReceiveProps(this.props);
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillReceiveProps(nextProps, nextState) {
     if (!nextProps.activated) return;
 
-    if (nextProps.activated.idx > 0) {
-      this.prompt();
-    }
+    if (!this.state.responded) {
+      this.setState(prevState => {
+        let prompt = Math.max(prevState.prompt || 0, nextProps.activated.idx + 1, 1);
 
-    if (nextProps.activated.idx > 2 && !this.responded) {
-      this.sendMessage(`I have no secrets 😡`);
-    }
-
-    if (nextProps.activated.idx === 0 && this.prompted && !this.responded) {
-      this.reset();
-    }
-  }
-
-  reset() {
-    this.prompted = false;
-    this.responded = false;
-    this.setState({ messages: defaultMessages.slice() });
-    this.props.onSendMessage('');
-  }
-
-  prompt() {
-    if (!this.prompted && !this.responded) {
-      this.prompted = true;
-      let messages = this.state.messages;
-      messages.push({
-        text: 'no really. i want your secrets...',
-        status: getTime()
+        return {
+          prompt,
+          messages: prompts.slice(0, prompt).map(p => ({ text: p }))
+        };
       });
-      this.setState({ messages });
+    }
+    if (nextProps.activated.idx > 2 && !this.state.responded) {
+      this.handleSecretCreation();
     }
   }
 
   handleSecretCreation() {
-    this.sendMessage("Fine ... here's a secret");
+    let idx = Math.floor(secrets.length * Math.random());
+    this.setState(({ messages }) => {
+      messages.push({ text: "I don't have any secrets", side: 'right' });
+      return { messages, responded: true };
+    });
+    setTimeout(() => {
+      this.setState(({ messages }) => {
+        messages.push({ text: "I'll take a guess then..." });
+        return { messages };
+      });
+    }, 100);
+
+    setTimeout(() => {
+      this.sendMessage(secrets[idx]);
+    }, 200);
   }
 
   onSendMessage(e) {
     e.preventDefault();
-    let message = e.target.querySelector('textarea').value;
-    if (message.length === 0) {
-      this.prompt();
-      return;
-    }
-    this.sendMessage(message);
+    let message = e.target.querySelector(`.${style.input}`).value;
+    if (message.length) this.sendMessage(message);
   }
 
   sendMessage(message) {
-    this.responded = true;
-    this.responseMessage = { text: message, side: 'right' };
-    let messages = this.state.messages;
-    messages.push(this.responseMessage);
-    this.setState({ messages });
+    this.responseMessage = { text: message, side: 'right', status: 'encrypting' };
+    this.setState(({ messages }) => {
+      messages.push(this.responseMessage);
+      return { messages, responded: true };
+    });
+    // Let the stage know what the input message is so it can transmit to encryption demo modules.
     this.props.onSendMessage(this.responseMessage);
   }
 
-  render() {
-    let noSecrets = "I don't have any secrets.";
-    let classNames = [style.secretInput];
-
-    if (this.activated(['prompt1', 'prompt2', 'prompt3', 'transit', 'decryptedmessage']))
-      classNames.push(style.visible);
-    if (this.responded) classNames.push(style.responded);
+  render({ displayInput, activated, message }, { messages, responded }) {
+    let visible = this.activated([
+      'prompt1',
+      'intercept1',
+      'intercept3',
+      'prompt2',
+      'prompt3',
+      'transit',
+      'decryptedmessage'
+    ]);
 
     // Set the response message status
-    if (this.responseMessage && this.props.activated) {
-      switch (this.props.activated.config.id) {
+    if (this.responseMessage && activated) {
+      switch (activated.config.id) {
         case 'transit':
+        case 'intercept2':
           this.responseMessage.status = 'Sending...';
-          this.responseMessage.encrypted = '[encrypted]';
+          this.responseMessage.encrypted = '▀▂▆▀▉▃▉▔▀▉█';
           break;
         case 'prompt3':
         case 'generate':
-          this.responseMessage.status = 'Encrypting...';
+          this.responseMessage.status = 'encrypting';
           this.responseMessage.encrypted = false;
           break;
         case 'decryptedmessage':
-          this.responseMessage.status = getTime();
+          this.responseMessage.status = false;
           this.responseMessage.encrypted = false;
           break;
       }
     }
 
-    console.log('this.props.displayInput', this.props.displayInput);
-    if (this.props.displayInput) {
-      classNames.push(style.displayInput);
-    }
-
     return (
-      <div className={classNames.join(' ')}>
-        {this.state.messages.map(msg =>
-          <MessageBubble text={msg.encrypted || msg.text} status={msg.status} side={msg.side || 'left'} />
-        )}
-        <form onSubmit={this.onSendMessage} className={style.inputContainer}>
-          <div>
-            <textarea placeholder="Shhh ... I won't tell anyone, promise." value={this.props.message || ''} />
-            <a
-              className={`${style.generateButton} ${this.state.secret ? style.hidden : ''}`}
-              onClick={this.handleSecretCreation}
-            >
-              {noSecrets}
-            </a>
-            <button>Send</button>
-          </div>
-        </form>
-      </div>
+      <Frame visible={visible}>
+        <div>
+          {messages
+            ? messages.map(msg =>
+                <MessageBubble
+                  text={msg.encrypted || msg.text}
+                  encrypted={!!msg.encrypted}
+                  status={msg.status}
+                  side={msg.side || 'left'}
+                />
+              )
+            : null}
+          {responded
+            ? null
+            : <MessageBubble side="right">
+                <form className={style.form} onSubmit={this.onSendMessage}>
+                  <input
+                    className={style.input}
+                    type="text"
+                    placeholder="Shhh ... I won't tell anyone, promise."
+                    value={message || ''}
+                  />
+                  <button className={style.primary}>Send</button>
+                  <button
+                    onClick={this.handleSecretCreation}
+                    className={style.generateButton}
+                  >{`I don't have any secrets.`}</button>
+                </form>
+              </MessageBubble>}
+        </div>
+      </Frame>
     );
   }
 }

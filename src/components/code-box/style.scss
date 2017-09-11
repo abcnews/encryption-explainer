@@ -1,0 +1,48 @@
+.code-box {
+  overflow: hidden;
+  max-width: 310px;
+  max-height: 100vh;
+  background: #fff;
+  height: auto;
+  width: auto;
+  font-family: monospace;
+  word-wrap: break-word;
+  border: 3px solid #5faabc;
+  border-radius: 5px;
+  padding: 20px;
+  margin: 0 auto;
+  color: rgb(134, 126, 142);
+  position: relative;
+  transition: all 0.5s;
+  opacity: 1;
+
+  &::after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 20px;
+    width: 100%;
+    background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+  }
+
+  &.hide {
+    opacity: 0;
+  }
+}
+
+.collapsed {
+  max-height: 4em;
+}
+
+.has-image {
+  margin-top: 80px;
+}
+
+.image {
+  width: 35%;
+  margin-top: -40%;
+  margin-bottom: 40%;
+  margin-left: auto;
+  margin-right: auto;
+}

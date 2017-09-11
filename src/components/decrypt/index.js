@@ -3,6 +3,11 @@ import Preact from 'preact';
 import style from './style.scss';
 import key from '../../lib/crypto';
 import activated from '../../lib/activated';
+import CodeBox from '../code-box';
+import iconCode from '../images/code.svg';
+import cx from 'classnames';
+import MessageBubble from '../message-bubble';
+import Frame from '../frame';
 
 export default class DecryptMessage extends Preact.Component {
   constructor() {
@@ -22,14 +27,12 @@ export default class DecryptMessage extends Preact.Component {
 
         let asp = new kbpgp.ASP({
           progress_hook: function(o) {
-            console.log('o', o);
             this.decryptLog.push(o);
             // progressLog.push(o);
           }
         });
 
         kbpgp.unbox({ keyfetch: keyManager, armored, asp }, (err, literals) => {
-          console.log('literals[0].toString()', literals[0].toString());
           this.decryptLog.push(literals[0].toString());
         });
       });
@@ -60,17 +63,16 @@ export default class DecryptMessage extends Preact.Component {
     clearTimeout(this.timer);
   }
 
-  render() {
+  render({ activated, encryptedMessage, message }, { privateKey }) {
     let classNames = [style.container];
-
-    if (this.activated(['privatekey', 'encrypted', 'decrypted'])) classNames.push(style.visible);
+    let frame = activated ? `frame-${activated.config.id}` : null;
+    let visible = this.activated(['privatekey', 'encrypted', 'decrypted']);
 
     let title;
-    if (this.props.activated) {
-      console.log('push', this.props.activated.config.id);
-      classNames.push(style[`active-${this.props.activated.config.id}`]);
+    if (activated) {
+      classNames.push(style[`active-${activated.config.id}`]);
 
-      switch (this.props.activated.config.id) {
+      switch (activated.config.id) {
         case 'encrypted':
           title = 'Encrypted message';
           break;
@@ -83,28 +85,29 @@ export default class DecryptMessage extends Preact.Component {
     }
 
     return (
-      <div className={classNames.join(' ')}>
-        <h2>
-          {title}
-        </h2>
-        <div className={`${style.message} ${style.privatekey}`}>
-          {(this.state.privateKey || '')
-            .replace(/Version:[^\n]*\n/, '')
-            .replace(/Comment:[^\n]*\n/, '')
-            .replace(/\n/g, '')}
+      <Frame visible={visible} type="technical">
+        <div className={cx(classNames.join(' '), style[frame])}>
+          <h2>
+            {title}
+          </h2>
+          <img src={iconCode} className={style.codeIcon} alt="Illustration of a code/password" />
+          <CodeBox
+            code={privateKey}
+            className={style.privateKey}
+            collapsed={this.activated(['encrypted', 'decrypted'])}
+          />
+          <div className={style.plus}> + </div>
+          <CodeBox code={encryptedMessage} className={style.encrypted} collapsed={this.activated(['decrypted'])} />
+          <div className={style.eq}> = </div>
+          <MessageBubble
+            side="right"
+            text={message}
+            className={style.bubble}
+            dark={true}
+            hide={!this.activated(['decrypted'])}
+          />
         </div>
-        <div className={style.plus}> + </div>
-        <div className={`${style.message} ${style.encrypted}`}>
-          {(this.props.encryptedMessage || '')
-            .replace(/Version:[^\n]*\n/, '')
-            .replace(/Comment:[^\n]*\n/, '')
-            .replace(/\n/g, '')}
-        </div>
-        <div className={style.eq}> = </div>
-        <div className={`${style.message} ${style.decrypted}`}>
-          {this.props.message}
-        </div>
-      </div>
+      </Frame>
     );
   }
 }
