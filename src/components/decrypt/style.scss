@@ -15,7 +15,7 @@
 }
 
 .private-key.private-key {
-  transition: all 0.5s;
+  transition: opacity 0.5s, max-height 0.5s;
   padding-top: 50px;
   margin: -30px auto 0;
 }

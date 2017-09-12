@@ -4,12 +4,11 @@
     background-color: rgb(0, 85, 105);
     position: relative;
     &::after {
+      content: "";
       background: none;
       background-image: url('components/images/algorithms_pattern.svg');
       background-size: 340px;
-      background-attachment: fixed;
-      transition: all 0.2s;
-      content: "";
+      // background-attachment: fixed;
       opacity: 0.2;
       position: absolute;
       top: 0;

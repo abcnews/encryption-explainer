@@ -6,6 +6,8 @@ import MessageBubble from '../message-bubble';
 import Frame from '../frame';
 import cx from 'classnames';
 
+// require('smoothscroll-polyfill').polyfill();
+
 const prompts = ['tell me a secret', 'no really, i want your secrets'];
 const secrets = [
   'i dropped my toothbrush in the 🚽 but used it anyway',
@@ -67,6 +69,13 @@ export default class SecretInput extends Preact.Component {
   onSendMessage(e) {
     e.preventDefault();
     let message = e.target.querySelector(`.${style.input}`).value;
+    let bounds = this.props.activated.element.getBoundingClientRect();
+    console.log('bounds', bounds);
+    // window.scroll({
+    //   top: bounds.top - window.innerHeight + bounds.height * 2 / 3,
+    //   left: 0,
+    //   behavior: 'smooth'
+    // });
     if (message.length) this.sendMessage(message);
   }
 
@@ -111,7 +120,7 @@ export default class SecretInput extends Preact.Component {
           this.responseMessage.encrypted = false;
           break;
         case 'decryptedmessage':
-          this.responseMessage.status = false;
+          this.responseMessage.status = 'decrypted';
           this.responseMessage.encrypted = false;
           break;
       }
