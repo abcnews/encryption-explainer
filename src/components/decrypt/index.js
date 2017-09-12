@@ -63,7 +63,7 @@ export default class DecryptMessage extends Preact.Component {
     clearTimeout(this.timer);
   }
 
-  render({ activated, encryptedMessage, message }, { privateKey }) {
+  render({ intercept, activated, encryptedMessage, message }, { privateKey }) {
     let classNames = [style.container];
     let frame = activated ? `frame-${activated.config.id}` : null;
     let visible = this.activated(['privatekey', 'encrypted', 'decrypted']);
@@ -85,7 +85,7 @@ export default class DecryptMessage extends Preact.Component {
     }
 
     return (
-      <Frame visible={visible} type="technical">
+      <Frame visible={visible} type="technical" intercept={intercept}>
         <div className={cx(classNames.join(' '), style[frame])}>
           <h2>
             {title}
@@ -94,10 +94,14 @@ export default class DecryptMessage extends Preact.Component {
           <CodeBox
             code={privateKey}
             className={style.privateKey}
-            collapsed={this.activated(['encrypted', 'decrypted'])}
+            collapsed={this.activated(['encrypted', 'decrypted', 'decryptedmessage'])}
           />
           <div className={style.plus}> + </div>
-          <CodeBox code={encryptedMessage} className={style.encrypted} collapsed={this.activated(['decrypted'])} />
+          <CodeBox
+            code={encryptedMessage}
+            className={style.encrypted}
+            collapsed={this.activated(['decrypted', 'decryptedmessage'])}
+          />
           <div className={style.eq}> = </div>
           <MessageBubble
             side="right"
@@ -105,6 +109,7 @@ export default class DecryptMessage extends Preact.Component {
             className={style.bubble}
             dark={true}
             hide={!this.activated(['decrypted'])}
+            status={this.activated(['decrypted']) ? 'decrypted' : null}
           />
         </div>
       </Frame>

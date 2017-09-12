@@ -1,32 +1,39 @@
+.secret-input {
+  z-index: 3 !important;
+}
+
 .form {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-
+  justify-content: stretch;
+  flex-direction: row;
   .input {
     min-width: 100%;
-    border: 1px solid #a2cdd8;
+    width: auto;
+    border: 1px solid #fcceb4;
     resize: none;
     border-radius: 3px;
     font-size: 16px;
     padding: 10px 5px;
-    flex: 2;
+    flex: auto;
   }
 
   button {
-    background: #8fd7e8;
+    background: #fcceb4;
     margin: 10px 0 0 0;
     border: none;
     height: 40px;
-    padding: 0 25px;
+    padding: 0 10px;
     font-size: 12px;
-    color: #004d61;
+    color: #612400;
     font-family: ABCSans, Arial, sans-serif;
+    width: auto;
+    flex: auto;
     &.primary {
-      color: #2e3638;
+      background: #ffad76;
       font-weight: bold;
       font-size: 14px;
-      background: #00d3ff;
+      margin-right: 10px;
     }
   }
 }

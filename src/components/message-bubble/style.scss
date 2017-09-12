@@ -49,6 +49,11 @@ $bubble-background-right-dark: #fbceb6;
   font-size: 16px;
   box-shadow: 0 20px 20px -10px #1b3c43;
 
+  p {
+    margin: 0;
+    // filter: blur(50px);
+  }
+
   .dark & {
     box-shadow: 0 20px 20px -10px rgba(27, 60, 67, 0.15);
   }
@@ -62,9 +67,16 @@ $bubble-background-right-dark: #fbceb6;
     background: $bubble-background-right-dark;
   }
 
-  img {
-    max-height: 100%;
-    height: 30px;
+  .iconLock {
+    height: calc(100% - 30px);
+    width: auto;
+    position: absolute;
+    left: 14px;
+    top: 14px;
+  }
+
+  .iconSafe {
+    height: calc(100% - 15px);
     width: auto;
     position: absolute;
     left: 14px;

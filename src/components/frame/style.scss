@@ -11,39 +11,59 @@
   transition: all 1s;
   z-index: 1;
 
-  > div {
+  &.technical {
+    background-color: #eef6f7;
+    &::after {
+      background-image: url('../images/algorithms_pattern.svg');
+      background-color: transparent;
+      background-size: 340px;
+      background-attachment: fixed;
+      background-position: top left;
+      background-repeat: repeat;
+      content: "";
+      opacity: 0.1;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      margin: 0;
+    }
+  }
+
+  > div:not(.shroud) {
     max-width: 400px;
     margin: 0 auto;
     z-index: 3;
     position: relative;
+
+    @media (min-width: 61.25rem) {
+      transform: translate(-18.25rem, 0);
+    }
   }
 }
 
-@media (min-width: 61.25rem) {
-  .frame > div {
-    transform: translate(-18.25rem, 0);
+.shroud {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  // background-image: url(../images/eye.svg);
+  background-image: none;
+  background-size: 190px;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-color: rgba(217, 48, 33, 1);
+  z-index: 4;
+  opacity: 0;
+  transition: opacity 0.5s;
+  pointer-events: none;
+  &.visible {
+    opacity: 0.5;
   }
 }
 
 .visible {
   opacity: 1;
-  z-index: 2;
-}
-
-.technical {
-  background-color: #eef6f7;
-  &::after {
-    background-image: url('../images/algorithms_pattern.svg');
-    background-size: 340px;
-    background-attachment: fixed;
-    content: "";
-    opacity: 0.3;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    margin: 0;
-    z-index: 1;
-  }
 }

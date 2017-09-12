@@ -56,25 +56,29 @@ export default class Stage extends Preact.Component {
     let intercept = this.activated(['intercept1', 'intercept2', 'intercept3'], 'state');
 
     return (
-      <div className={cx(style.stage, { [style.intercept]: intercept })}>
+      <div className={cx(style.stage)}>
         <SecretInput
           onSendMessage={this.onSendMessage}
           message={message}
           activated={activated}
           deactivated={deactivated}
+          intercept={intercept}
+          encryptedMessage={encryptedMessage}
         />
-        <KeyGeneration activated={activated} deactivated={deactivated} />
+        <KeyGeneration activated={activated} deactivated={deactivated} intercept={intercept} />
         <EncryptMessage
           message={message}
           activated={activated}
           deactivated={deactivated}
           setEncryptedMessage={this.onEncryptedMessage}
+          intercept={intercept}
         />
         <DecryptMessage
           message={message}
           encryptedMessage={encryptedMessage}
           activated={activated}
           deactivated={deactivated}
+          intercept={intercept}
         />
       </div>
     );

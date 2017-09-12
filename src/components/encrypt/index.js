@@ -69,12 +69,12 @@ export default class EncryptMessage extends Preact.Component {
     clearTimeout(this.timer);
   }
 
-  render(props, { plainMessage, encryptedMessage, title, publicKey }) {
+  render({ intercept, activated }, { plainMessage, encryptedMessage, title, publicKey }) {
     let visible = this.activated(['publickey', 'encrypt']);
-    let frame = props.activated ? `frame-${props.activated.config.id}` : null;
+    let frame = activated ? `frame-${activated.config.id}` : null;
 
     return (
-      <Frame visible={visible} type="technical">
+      <Frame visible={visible} type="technical" intercept={intercept}>
         <div className={cx(style.encryptionContainer, style[frame])}>
           <div className={style.encryptContent}>
             <h2>

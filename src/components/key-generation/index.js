@@ -52,11 +52,11 @@ class KeyGeneration extends Preact.Component {
     }
   }
 
-  render(props, { keyLogItem }) {
+  render({ intercept }, { keyLogItem }) {
     let visible = this.activated(['generate', 'intercept2']);
 
     return (
-      <Frame visible={visible} type="technical">
+      <Frame visible={visible} type="technical" intercept={intercept}>
         <div className={style.container}>
           <h2>Generating a key-pair</h2>
           <CodeBox code={keyLogItem} />

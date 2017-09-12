@@ -80,7 +80,7 @@ export default class SecretInput extends Preact.Component {
     this.props.onSendMessage(this.responseMessage);
   }
 
-  render({ displayInput, activated, message }, { messages, responded }) {
+  render({ displayInput, activated, message, intercept, encryptedMessage }, { messages, responded }) {
     let visible = this.activated([
       'prompt1',
       'intercept1',
@@ -97,7 +97,13 @@ export default class SecretInput extends Preact.Component {
         case 'transit':
         case 'intercept2':
           this.responseMessage.status = 'Sending...';
-          this.responseMessage.encrypted = '▀▂▆▀▉▃▉▔▀▉█';
+          this.responseMessage.encrypted =
+            (encryptedMessage || '')
+              .replace('-----BEGIN PGP MESSAGE-----', '')
+              .replace(/Version:[^\n]*\n/, '')
+              .replace(/Comment:[^\n]*\n/, '')
+              .replace(/\n/g, '')
+              .substr(0, 20) + '...';
           break;
         case 'prompt3':
         case 'generate':
@@ -112,7 +118,7 @@ export default class SecretInput extends Preact.Component {
     }
 
     return (
-      <Frame visible={visible}>
+      <Frame visible={visible} intercept={intercept} className={style.secretInput}>
         <div>
           {messages
             ? messages.map(msg =>

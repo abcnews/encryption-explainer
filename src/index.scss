@@ -10,7 +10,7 @@
       background-attachment: fixed;
       transition: all 0.2s;
       content: "";
-      opacity: 0.3;
+      opacity: 0.2;
       position: absolute;
       top: 0;
       left: 0;
@@ -19,6 +19,10 @@
       height: 100%;
       margin: 0;
     }
+  }
+
+  .is-dark .Header-content.Header-content > h1:after {
+    background-color: rgba(255, 255, 255, 0.3);
   }
 
   .Header.is-dark.is-dark,
@@ -38,17 +42,14 @@
       &::before {
         background-color: rgba(27, 60, 67, 0.85);
       }
-    }
 
-    .Block-content:nth-child(2) {
-      margin-top: 100vh;
-    }
+      &:nth-child(2) {
+        margin-top: 60vh;
+      }
 
-    .Block-content:last-child {
-      margin-bottom: 100vh;
-    }
-    .is-piecemeal > .Block-content::before {
-      background-color: rgba(0, 0, 0, 0.8);
+      &:last-child {
+        margin-bottom: 100vh;
+      }
     }
   }
 }
