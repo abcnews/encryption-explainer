@@ -40,7 +40,6 @@ export default class Stage extends Preact.Component {
     // Add the activated and deactivated marks
 
     if (detail.activated) {
-      console.log('detail.activated.config.id', detail.activated.config.id);
       let html = document.querySelector('html');
       let regex = /scrolly-frame-[^\s]*/;
       if (html.className.match(regex)) {
@@ -54,20 +53,6 @@ export default class Stage extends Preact.Component {
 
   render(props, { message, activated, deactivated, encryptedMessage }) {
     let intercept = this.activated(['intercept1', 'intercept2', 'intercept3'], 'state');
-
-    // return (
-    //   <div className={cx(style.stage)}>
-    //     <SecretInput
-    //       onSendMessage={this.onSendMessage}
-    //       message={message}
-    //       activated={activated}
-    //       deactivated={deactivated}
-    //       intercept={intercept}
-    //       encryptedMessage={encryptedMessage}
-    //     />
-    //     <KeyGeneration activated={activated} deactivated={deactivated} intercept={intercept} />
-    //   </div>
-    // );
 
     return (
       <div className={cx(style.stage)}>

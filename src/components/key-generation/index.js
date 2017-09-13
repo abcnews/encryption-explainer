@@ -41,7 +41,7 @@ class KeyGeneration extends Preact.Component {
               default:
                 msg = '' + item.what;
             }
-            // console.log('item', item);
+
             this.setState({ keyLogItem: msg });
           } else {
             this.setState({ keyLogItem: 'Finished generating key-pair' });
@@ -54,12 +54,6 @@ class KeyGeneration extends Preact.Component {
 
   render({ intercept }, { keyLogItem }) {
     let visible = this.activated(['generate', 'intercept2']);
-
-    // return (
-    //   <Frame visible={visible} type="technical" intercept={intercept}>
-    //     <div className={style.container} />
-    //   </Frame>
-    // );
 
     return (
       <Frame visible={visible} type="technical" intercept={intercept}>

@@ -12,7 +12,6 @@ const kbpgp = new Promise(resolve => {
 module.exports = kbpgp.then(kbpgp => {
   return new Promise((resolve, reject) => {
     const flags = kbpgp['const'].openpgp;
-
     let progressLog = [];
 
     let asp = new kbpgp.ASP({
@@ -26,7 +25,7 @@ module.exports = kbpgp.then(kbpgp => {
         asp: asp,
         userid: 'Fake User <user@example.com>',
         primary: {
-          nbits: 1024,
+          nbits: 512,
           flags: flags.encrypt_comm,
           expire_in: 0
         },

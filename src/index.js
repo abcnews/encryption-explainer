@@ -8,7 +8,8 @@ const container = document.querySelector('[data-encryption-explainer]');
 const stage = container.querySelector('.scrollyteller-stage');
 
 // Get rid of support message.
-document.querySelector('.interactive_support_msg').parentNode.remove();
+const supportMsg = document.querySelector('.interactive_support_msg').parentNode;
+supportMsg.parentNode.removeChild(supportMsg);
 
 const init = e => {
   render(container, e);

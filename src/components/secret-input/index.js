@@ -6,7 +6,7 @@ import MessageBubble from '../message-bubble';
 import Frame from '../frame';
 import cx from 'classnames';
 
-// require('smoothscroll-polyfill').polyfill();
+require('smoothscroll-polyfill').polyfill();
 
 const prompts = ['tell me a secret', 'no really, i want your secrets'];
 const secrets = [
@@ -22,6 +22,7 @@ export default class SecretInput extends Preact.Component {
     this.activated = activated.bind(this);
     this.handleSecretCreation = this.handleSecretCreation.bind(this);
     this.onSendMessage = this.onSendMessage.bind(this);
+    this.handleInput = this.handleInput.bind(this);
     this.responseMessage = null;
   }
 
@@ -48,7 +49,14 @@ export default class SecretInput extends Preact.Component {
     }
   }
 
-  handleSecretCreation() {
+  handleInput(e) {
+    this.setState({
+      message: e.target.value
+    });
+  }
+
+  handleSecretCreation(e) {
+    e && e.preventDefault();
     let idx = Math.floor(secrets.length * Math.random());
     this.setState(({ messages }) => {
       messages.push({ text: "I don't have any secrets", side: 'right' });
@@ -59,23 +67,24 @@ export default class SecretInput extends Preact.Component {
         messages.push({ text: "I'll take a guess then..." });
         return { messages };
       });
-    }, 100);
+    }, 150);
 
     setTimeout(() => {
       this.sendMessage(secrets[idx]);
-    }, 200);
+    }, 300);
   }
 
   onSendMessage(e) {
     e.preventDefault();
     let message = e.target.querySelector(`.${style.input}`).value;
     let bounds = this.props.activated.element.getBoundingClientRect();
-    console.log('bounds', bounds);
-    // window.scroll({
-    //   top: bounds.top - window.innerHeight + bounds.height * 2 / 3,
-    //   left: 0,
-    //   behavior: 'smooth'
-    // });
+    let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    let target = window.pageYOffset + bounds.top - viewportHeight * 2 / 3;
+    window.scroll({
+      top: Math.max(target, window.pageYOffset),
+      left: 0,
+      behavior: 'smooth'
+    });
     if (message.length) this.sendMessage(message);
   }
 
@@ -144,12 +153,15 @@ export default class SecretInput extends Preact.Component {
             : <MessageBubble side="right">
                 <form className={style.form} onSubmit={this.onSendMessage}>
                   <input
+                    onKeyup={this.handleInput}
                     className={style.input}
                     type="text"
                     placeholder="Shhh ... I won't tell anyone, promise."
-                    value={message || ''}
+                    value={message || this.state.message || ''}
                   />
-                  <button className={style.primary}>Send</button>
+                  <button type="submit" className={style.primary}>
+                    Send
+                  </button>
                   <button
                     onClick={this.handleSecretCreation}
                     className={style.generateButton}
