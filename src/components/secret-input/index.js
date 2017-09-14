@@ -57,6 +57,7 @@ export default class SecretInput extends Preact.Component {
 
   handleSecretCreation(e) {
     e && e.preventDefault();
+
     let idx = Math.floor(secrets.length * Math.random());
     this.setState(({ messages }) => {
       messages.push({ text: "I don't have any secrets", side: 'right' });
@@ -72,10 +73,27 @@ export default class SecretInput extends Preact.Component {
     setTimeout(() => {
       this.sendMessage(secrets[idx]);
     }, 300);
+
+    // See how many people interact
+    ABC.News.trackEvent({
+      category: 'IDS',
+      action: 'Secret created',
+      label: 'Encryption Explainer',
+      value: 1
+    });
   }
 
   onSendMessage(e) {
     e.preventDefault();
+
+    // See how many people interact
+    ABC.News.trackEvent({
+      category: 'IDS',
+      action: 'Secret entered',
+      label: 'Encryption Explainer',
+      value: 1
+    });
+
     let message = e.target.querySelector(`.${style.input}`).value;
     let bounds = this.props.activated.element.getBoundingClientRect();
     let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
