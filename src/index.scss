@@ -13,12 +13,16 @@
     transform: translateY(-102%);
   }
 
+  .is-richtext .Block-media.is-fixed {
+    position: fixed;
+  }
+
   .init-interactive[data-encryption-explainer] {
     .is-piecemeal > .Block-content.Block-content {
       margin-bottom: 40vh;
       margin-top: 40vh;
       &::before {
-        background-color: rgba(27, 60, 67, 0.85);
+        background-color: rgba(0, 0, 0, 0.8);
       }
 
       &:nth-child(2) {
