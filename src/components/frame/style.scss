@@ -40,6 +40,10 @@
     @media (min-width: 61.25rem) {
       transform: translate(-18.25rem, 0);
     }
+
+    @media (min-height: 50rem) {
+      margin-top: 60px;
+    }
   }
 }
 

@@ -17,6 +17,10 @@
     position: fixed;
   }
 
+  .is-dark-mode.is-dark-mode > body {
+    background: #004e61;
+  }
+
   .init-interactive[data-encryption-explainer] {
     .is-piecemeal > .Block-content.Block-content {
       margin-bottom: 40vh;
