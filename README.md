@@ -1,6 +1,6 @@
-# encryption-explainer
+# Tell me a secret
 
-A project generated from [aunty](https://github.com/abcnews/aunty)'s `basic-story` template.
+A scrollyteller explaining [how encrypted messaging works](http://www.abc.net.au/news/2017-09-15/how-encryption-works-explained/8732148) and where the Australian government might propose it gains access to encrypted communications.
 
 ## Authors
 
