@@ -1,5 +1,4 @@
-/** @jsx Preact.h */
-import Preact from 'preact';
+import { Component, h } from 'preact';
 import style from './style.scss';
 import key from '../../lib/crypto';
 import activated from '../../lib/activated';
@@ -9,7 +8,7 @@ import cx from 'classnames';
 import MessageBubble from '../message-bubble';
 import Frame from '../frame';
 
-export default class DecryptMessage extends Preact.Component {
+export default class DecryptMessage extends Component {
   constructor() {
     super();
     this.activated = activated.bind(this);
@@ -87,9 +86,7 @@ export default class DecryptMessage extends Preact.Component {
     return (
       <Frame visible={visible} type="technical" intercept={intercept}>
         <div className={cx(classNames.join(' '), style[frame])}>
-          <h2>
-            {title}
-          </h2>
+          <h2>{title}</h2>
           <img src={iconCode} className={style.codeIcon} alt="Illustration of a code/password" />
           <CodeBox
             code={privateKey}

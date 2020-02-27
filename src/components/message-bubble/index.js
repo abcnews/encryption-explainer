@@ -1,11 +1,10 @@
-/** @jsx Preact.h */
-import Preact from 'preact';
+import { Component, h } from 'preact';
 import style from './style.scss';
 import cx from 'classnames';
 import lock from '../images/lock.svg';
 import safe from '../images/safe.svg';
 
-export default class MessageBubble extends Preact.Component {
+export default class MessageBubble extends Component {
   render({ text, hide, dark, side, status, encrypted, children, className }) {
     let statusEl;
 
@@ -23,11 +22,7 @@ export default class MessageBubble extends Preact.Component {
         statusEl = <div>✓✓</div>;
         break;
       default:
-        statusEl = (
-          <div>
-            {status}
-          </div>
-        );
+        statusEl = <div>{status}</div>;
         break;
     }
 
@@ -36,13 +31,9 @@ export default class MessageBubble extends Preact.Component {
         <div className={cx(style.corner, style[side])}>
           <div className={`${style.bubble}`}>
             {encrypted ? <img src={lock} className={style.iconLock} alt="Illustration of a lock" /> : null}
-            <p>
-              {text}
-            </p>
+            <p>{text}</p>
             {children}
-            <div className={style.status}>
-              {status ? statusEl : null}
-            </div>
+            <div className={style.status}>{status ? statusEl : null}</div>
           </div>
         </div>
       </div>

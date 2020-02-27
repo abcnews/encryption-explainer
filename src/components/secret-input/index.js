@@ -1,5 +1,4 @@
-/** @jsx Preact.h */
-import Preact from 'preact';
+import { Component, h } from 'preact';
 import style from './style.scss';
 import activated from '../../lib/activated';
 import MessageBubble from '../message-bubble';
@@ -16,7 +15,7 @@ const secrets = [
   "i don't actually need my glasses 👓"
 ];
 
-export default class SecretInput extends Preact.Component {
+export default class SecretInput extends Component {
   constructor() {
     super();
     this.activated = activated.bind(this);
@@ -97,7 +96,7 @@ export default class SecretInput extends Preact.Component {
     let message = e.target.querySelector(`.${style.input}`).value;
     let bounds = this.props.activated.element.getBoundingClientRect();
     let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    let target = window.pageYOffset + bounds.top - viewportHeight * 2 / 3;
+    let target = window.pageYOffset + bounds.top - (viewportHeight * 2) / 3;
     window.scroll({
       top: Math.max(target, window.pageYOffset),
       left: 0,
@@ -157,35 +156,35 @@ export default class SecretInput extends Preact.Component {
       <Frame visible={visible} intercept={intercept} className={style.secretInput}>
         <div>
           {messages
-            ? messages.map(msg =>
+            ? messages.map(msg => (
                 <MessageBubble
                   text={msg.encrypted || msg.text}
                   encrypted={!!msg.encrypted}
                   status={msg.status}
                   side={msg.side || 'left'}
                 />
-              )
+              ))
             : null}
-          {responded
-            ? null
-            : <MessageBubble side="right">
-                <form className={style.form} onSubmit={this.onSendMessage}>
-                  <input
-                    onKeyup={this.handleInput}
-                    className={style.input}
-                    type="text"
-                    placeholder="Shhh ... I won't tell anyone, promise."
-                    value={message || this.state.message || ''}
-                  />
-                  <button type="submit" className={style.primary}>
-                    Send
-                  </button>
-                  <button
-                    onClick={this.handleSecretCreation}
-                    className={style.generateButton}
-                  >{`I don't have any secrets.`}</button>
-                </form>
-              </MessageBubble>}
+          {responded ? null : (
+            <MessageBubble side="right">
+              <form className={style.form} onSubmit={this.onSendMessage}>
+                <input
+                  onKeyup={this.handleInput}
+                  className={style.input}
+                  type="text"
+                  placeholder="Shhh ... I won't tell anyone, promise."
+                  value={message || this.state.message || ''}
+                />
+                <button type="submit" className={style.primary}>
+                  Send
+                </button>
+                <button
+                  onClick={this.handleSecretCreation}
+                  className={style.generateButton}
+                >{`I don't have any secrets.`}</button>
+              </form>
+            </MessageBubble>
+          )}
         </div>
       </Frame>
     );

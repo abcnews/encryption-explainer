@@ -1,5 +1,4 @@
-/** @jsx Preact.h */
-import Preact from 'preact';
+import { Component, h } from 'preact';
 import style from './style.scss';
 import key from '../../lib/crypto';
 import activated from '../../lib/activated';
@@ -8,7 +7,7 @@ import Frame from '../frame';
 import iconCode from '../images/code.svg';
 import iconSafe from '../images/safe.svg';
 
-class KeyGeneration extends Preact.Component {
+class KeyGeneration extends Component {
   constructor() {
     super();
     this.activated = activated.bind(this);
@@ -33,7 +32,7 @@ class KeyGeneration extends Preact.Component {
                 msg = 'hunting for a prime ...' + item.p.toString().slice(-3);
                 break;
               case 'mr':
-                msg = 'confirming prime candidate ' + ~~(100 * item.i / item.total) + '%';
+                msg = 'confirming prime candidate ' + ~~((100 * item.i) / item.total) + '%';
                 break;
               case 'found':
                 msg = 'found a prime';

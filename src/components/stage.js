@@ -1,5 +1,4 @@
-/** @jsx Preact.h */
-import Preact from 'preact';
+import { Component, h } from 'preact';
 import style from './stage.scss';
 import activated from '../lib/activated';
 import SecretInput from './secret-input';
@@ -8,7 +7,7 @@ import EncryptMessage from './encrypt';
 import DecryptMessage from './decrypt';
 import cx from 'classnames';
 
-export default class Stage extends Preact.Component {
+export default class Stage extends Component {
   constructor() {
     super();
     this.activated = activated.bind(this);

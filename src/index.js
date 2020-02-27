@@ -1,5 +1,4 @@
-/** @jsx Preact.h */
-import Preact from 'preact';
+import { h, render } from 'preact';
 import './index.scss';
 
 require('smoothscroll-polyfill').polyfill();
@@ -12,32 +11,31 @@ const supportMsg = document.querySelector('.interactive_support_msg').parentNode
 supportMsg.parentNode.removeChild(supportMsg);
 
 const init = e => {
-  render(container, e);
+  renderApp(container, e);
   document.removeEventListener('mark', init);
 };
 
-let render = (container, e) => {
-  let { target: stage, detail: { activated, deactivated } } = e;
+let renderApp = (container, e) => {
+  let {
+    target: stage,
+    detail: { activated, deactivated }
+  } = e;
   const Stage = require('./components/stage').default;
 
-  Preact.render(
-    <Stage container={container} activated={activated} deactivated={deactivated} />,
-    stage,
-    stage.lastChild
-  );
+  render(<Stage container={container} activated={activated} deactivated={deactivated} />, stage, stage.lastChild);
 };
 
 // Do some hot reload magic with errors
 if (module.hot) {
   // Wrap the actual renderer in an error trap
-  let renderFunction = render;
-  render = (container, ev) => {
+  let renderFunction = renderApp;
+  renderApp = (container, ev) => {
     try {
       renderFunction(container, ev);
     } catch (e) {
       // Render the error to the screen in place of the actual app
       const ErrorBox = require('./error').default;
-      Preact.render(<ErrorBox error={e} />, ev.target, ev.target.lastChild);
+      render(<ErrorBox error={e} />, ev.target, ev.target.lastChild);
     }
   };
 

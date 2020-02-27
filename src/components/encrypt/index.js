@@ -1,5 +1,4 @@
-/** @jsx Preact.h */
-import Preact from 'preact';
+import { Component, h } from 'preact';
 import style from './style.scss';
 import key from '../../lib/crypto';
 import activated from '../../lib/activated';
@@ -9,7 +8,7 @@ import Frame from '../frame';
 import safe from '../images/safe.svg';
 import cx from 'classnames';
 
-export default class EncryptMessage extends Preact.Component {
+export default class EncryptMessage extends Component {
   constructor() {
     super();
     this.activated = activated.bind(this);
@@ -77,9 +76,7 @@ export default class EncryptMessage extends Preact.Component {
       <Frame visible={visible} type="technical" intercept={intercept}>
         <div className={cx(style.encryptionContainer, style[frame])}>
           <div className={style.encryptContent}>
-            <h2>
-              {title}
-            </h2>
+            <h2>{title}</h2>
             <img src={safe} className={style.safe} alt="Illustration of an open safe" />
             <CodeBox code={publicKey} className={style.publickey} collapsed={this.activated(['encrypt'])} />
             <div className={cx(style.operator, { [style.hide]: !this.activated(['encrypt']) })}> + </div>
