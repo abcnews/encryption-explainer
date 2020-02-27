@@ -72,26 +72,10 @@ export default class SecretInput extends Component {
     setTimeout(() => {
       this.sendMessage(secrets[idx]);
     }, 300);
-
-    // See how many people interact
-    ABC.News.trackEvent({
-      category: 'IDS',
-      action: 'Secret created',
-      label: 'Encryption Explainer',
-      value: 1
-    });
   }
 
   onSendMessage(e) {
     e.preventDefault();
-
-    // See how many people interact
-    ABC.News.trackEvent({
-      category: 'IDS',
-      action: 'Secret entered',
-      label: 'Encryption Explainer',
-      value: 1
-    });
 
     let message = e.target.querySelector(`.${style.input}`).value;
     let bounds = this.props.activated.element.getBoundingClientRect();
