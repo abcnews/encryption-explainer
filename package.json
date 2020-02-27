@@ -1,30 +1,30 @@
 {
-  "name": "encryption-explainer",
-  "version": "1.0.0",
-  "description": "Tell me a secret",
-  "license": "MIT",
-  "private": true,
-  "contributors": [
-    "Simon Elvery <simon@elvery.net>"
-  ],
-  "scripts": {
-    "start": "aunty serve"
-  },
-  "devDependencies": {
-    "@abcnews/aunty": "^10.9.0"
-  },
-  "aunty": {
-    "type": "preact"
-  },
-  "dependencies": {
-    "bel": "^5.0.2",
-    "classnames": "^2.2.5",
-    "domready": "^1.0.8",
-    "kbpgp": "^2.0.73",
-    "preact": "^8.2.1",
-    "preact-compat": "^3.16.0",
-    "promise-polyfill": "^6.0.2",
-    "smoothscroll-polyfill": "^0.3.6",
-    "util-identifier": "^1.0.2"
-  }
+	"name": "encryption-explainer",
+	"version": "1.1.0",
+	"description": "Tell me a secret",
+	"license": "MIT",
+	"private": true,
+	"contributors": [
+		"Simon Elvery <simon@elvery.net>"
+	],
+	"scripts": {
+		"start": "aunty serve"
+	},
+	"devDependencies": {
+		"@abcnews/aunty": "^10.9.0"
+	},
+	"aunty": {
+		"type": "preact"
+	},
+	"dependencies": {
+		"bel": "^5.0.2",
+		"classnames": "^2.2.5",
+		"domready": "^1.0.8",
+		"kbpgp": "^2.0.73",
+		"preact": "^8.2.1",
+		"preact-compat": "^3.16.0",
+		"promise-polyfill": "^6.0.2",
+		"smoothscroll-polyfill": "^0.3.6",
+		"util-identifier": "^1.0.2"
+	}
 }
