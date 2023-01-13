@@ -1,28 +1,28 @@
 {
-  "name": "encryption-explainer",
-  "version": "1.1.0",
-  "description": "Tell me a secret",
-  "license": "MIT",
-  "private": true,
-  "contributors": [
-    "Simon Elvery <simon@elvery.net>"
-  ],
-  "scripts": {
-    "start": "aunty serve"
-  },
-  "devDependencies": {
-    "@abcnews/aunty": "^13.2.2"
-  },
-  "aunty": {
-    "type": "react"
-  },
-  "dependencies": {
-    "@abcnews/env-utils": "^3.1.0",
-    "@abcnews/mount-utils": "^2.0.0",
-    "@abcnews/scrollyteller": "^4.1.1",
-    "classnames": "^2.2.5",
-    "kbpgp": "^2.0.73",
-    "react": "^16.14.0",
-    "react-dom": "^16.14.0"
-  }
+	"name": "encryption-explainer",
+	"version": "2.0.0",
+	"description": "Tell me a secret",
+	"license": "MIT",
+	"private": true,
+	"contributors": [
+		"Simon Elvery <simon@elvery.net>"
+	],
+	"scripts": {
+		"start": "aunty serve"
+	},
+	"devDependencies": {
+		"@abcnews/aunty": "^13.2.2"
+	},
+	"aunty": {
+		"type": "react"
+	},
+	"dependencies": {
+		"@abcnews/env-utils": "^3.1.0",
+		"@abcnews/mount-utils": "^2.0.0",
+		"@abcnews/scrollyteller": "^4.1.1",
+		"classnames": "^2.2.5",
+		"kbpgp": "^2.0.73",
+		"react": "^16.14.0",
+		"react-dom": "^16.14.0"
+	}
 }
