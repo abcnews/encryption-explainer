@@ -1,6 +1,4 @@
-const Promise = window.Promise || require('promise-polyfill');
-
-const kbpgp = new Promise(resolve => {
+const kbpgp = new Promise((resolve) => {
   let t = setInterval(() => {
     if (window.kbpgp) {
       clearInterval(t);
@@ -9,15 +7,15 @@ const kbpgp = new Promise(resolve => {
   }, 1);
 });
 
-module.exports = kbpgp.then(kbpgp => {
-  return new Promise((resolve, reject) => {
+const crypto = kbpgp.then((kbpgp) => {
+  return new Promise((resolve) => {
     const flags = kbpgp['const'].openpgp;
     let progressLog = [];
 
     let asp = new kbpgp.ASP({
-      progress_hook: function(o) {
+      progress_hook: function (o) {
         progressLog.push(o);
-      }
+      },
     });
 
     kbpgp.KeyManager.generate(
@@ -27,12 +25,12 @@ module.exports = kbpgp.then(kbpgp => {
         primary: {
           nbits: 512,
           flags: flags.encrypt_comm,
-          expire_in: 0
+          expire_in: 0,
         },
-        subkeys: []
+        subkeys: [],
       },
-      (err, kp) => {
-        kp.sign({}, err => {
+      (_err, kp) => {
+        kp.sign({}, () => {
           let privateKey = new Promise((resolve, reject) => {
             kp.export_pgp_private({}, (err, key) => (err ? reject(err) : resolve(key)));
           });
@@ -45,7 +43,7 @@ module.exports = kbpgp.then(kbpgp => {
               keyManager: kp,
               progressLog,
               privateKey,
-              publicKey
+              publicKey,
             });
           });
         });
@@ -53,3 +51,5 @@ module.exports = kbpgp.then(kbpgp => {
     );
   });
 });
+
+export default crypto;

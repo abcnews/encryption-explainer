@@ -1,17 +1,21 @@
-import { Component, h } from 'preact';
-import style from './style.scss';
-import key from '../../lib/crypto';
+import React from 'react';
 import activated from '../../lib/activated';
+import key from '../../lib/crypto';
 import CodeBox from '../code-box';
 import Frame from '../frame';
 import iconCode from '../images/code.svg';
 import iconSafe from '../images/safe.svg';
+import styles from './styles.scss';
 
-class KeyGeneration extends Component {
+export default class KeyGeneration extends React.Component {
   constructor() {
     super();
     this.activated = activated.bind(this);
     this.hasDisplayed = false;
+
+    this.state = {
+      keyLogItem: '',
+    };
   }
 
   componentDidUpdate() {
@@ -51,7 +55,10 @@ class KeyGeneration extends Component {
     }
   }
 
-  render({ intercept }, { keyLogItem }) {
+  render() {
+    const { intercept } = this.props;
+    const { keyLogItem } = this.state;
+
     let visible = this.activated(['generate', 'intercept2']);
 
     return (
@@ -59,11 +66,11 @@ class KeyGeneration extends Component {
         <div>
           <h2>Generating a key-pair</h2>
           <CodeBox code={keyLogItem} />
-          <div className={style.illo}>
+          <div className={styles.illo}>
             <div>
-              <img className={style.image} src={iconSafe} alt="Illustration of a safe" />
+              <img className={styles.image} src={iconSafe} alt="Illustration of a safe" />
             </div>
-            <div className={style.joiner}>
+            <div className={styles.joiner}>
               <span />
               <span />
               <span />
@@ -73,7 +80,7 @@ class KeyGeneration extends Component {
               <span />
             </div>
             <div>
-              <img className={style.image} src={iconCode} alt="Illustration of password or keycode" />
+              <img className={styles.image} src={iconCode} alt="Illustration of password or keycode" />
             </div>
           </div>
         </div>
@@ -81,5 +88,3 @@ class KeyGeneration extends Component {
     );
   }
 }
-
-export default KeyGeneration;

@@ -1,21 +1,25 @@
-import { Component, h } from 'preact';
-import style from './style.scss';
-import key from '../../lib/crypto';
-import activated from '../../lib/activated';
-import CodeBox from '../code-box';
-import iconCode from '../images/code.svg';
 import cx from 'classnames';
-import MessageBubble from '../message-bubble';
+import React from 'react';
+import activated from '../../lib/activated';
+import key from '../../lib/crypto';
+import CodeBox from '../code-box';
 import Frame from '../frame';
+import iconCode from '../images/code.svg';
+import MessageBubble from '../message-bubble';
+import styles from './styles.scss';
 
-export default class DecryptMessage extends Component {
+export default class DecryptMessage extends React.Component {
   constructor() {
     super();
     this.activated = activated.bind(this);
     this.decryptLog = [];
+
+    this.state = {
+      privateKey: '',
+    };
   }
 
-  componentWillReceiveProps(nextProps) {
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.encryptedMessage !== this.props.encryptedMessage) {
       key.then(({ privateKey, keyManager, kbpgp }) => {
         let armored = nextProps.encryptedMessage;
@@ -25,10 +29,9 @@ export default class DecryptMessage extends Component {
         this.decryptLog = [];
 
         let asp = new kbpgp.ASP({
-          progress_hook: function(o) {
+          progress_hook: function (o) {
             this.decryptLog.push(o);
-            // progressLog.push(o);
-          }
+          },
         });
 
         kbpgp.unbox({ keyfetch: keyManager, armored, asp }, (err, literals) => {
@@ -62,14 +65,17 @@ export default class DecryptMessage extends Component {
     clearTimeout(this.timer);
   }
 
-  render({ intercept, activated, encryptedMessage, message }, { privateKey }) {
-    let classNames = [style.container];
+  render() {
+    const { intercept, activated, encryptedMessage, message } = this.props;
+    const { privateKey } = this.state;
+
+    let classNames = [styles.container];
     let frame = activated ? `frame-${activated.config.id}` : null;
     let visible = this.activated(['privatekey', 'encrypted', 'decrypted']);
 
     let title;
     if (activated) {
-      classNames.push(style[`active-${activated.config.id}`]);
+      classNames.push(styles[`active-${activated.config.id}`]);
 
       switch (activated.config.id) {
         case 'encrypted':
@@ -85,25 +91,25 @@ export default class DecryptMessage extends Component {
 
     return (
       <Frame visible={visible} type="technical" intercept={intercept}>
-        <div className={cx(classNames.join(' '), style[frame])}>
+        <div className={cx(classNames.join(' '), styles[frame])}>
           <h2>{title}</h2>
-          <img src={iconCode} className={style.codeIcon} alt="Illustration of a code/password" />
+          <img src={iconCode} className={styles.codeIcon} alt="Illustration of a code/password" />
           <CodeBox
             code={privateKey}
-            className={style.privateKey}
+            className={styles.privateKey}
             collapsed={this.activated(['encrypted', 'decrypted', 'decryptedmessage'])}
           />
-          <div className={style.plus}> + </div>
+          <div className={styles.plus}> + </div>
           <CodeBox
             code={encryptedMessage}
-            className={style.encrypted}
+            className={styles.encrypted}
             collapsed={this.activated(['decrypted', 'decryptedmessage'])}
           />
-          <div className={style.eq}> = </div>
+          <div className={styles.eq}> = </div>
           <MessageBubble
             side="right"
             text={message}
-            className={style.bubble}
+            className={styles.bubble}
             dark={true}
             hide={!this.activated(['decrypted'])}
             status={this.activated(['decrypted']) ? 'decrypted' : null}

@@ -1,21 +1,18 @@
-import { Component, h } from 'preact';
-import style from './style.scss';
+import React from 'react';
 import activated from '../../lib/activated';
-import MessageBubble from '../message-bubble';
 import Frame from '../frame';
-import cx from 'classnames';
-
-require('smoothscroll-polyfill').polyfill();
+import MessageBubble from '../message-bubble';
+import styles from './styles.scss';
 
 const prompts = ['tell me a secret', 'no really, i want your secrets'];
 const secrets = [
   'i dropped my toothbrush in the 🚽 but used it anyway',
   'i keep my toe nail clippings in a jar under the sink',
   'i really like Nickelback',
-  "i don't actually need my glasses 👓"
+  "i don't actually need my glasses 👓",
 ];
 
-export default class SecretInput extends Component {
+export default class SecretInput extends React.Component {
   constructor() {
     super();
     this.activated = activated.bind(this);
@@ -25,24 +22,27 @@ export default class SecretInput extends Component {
     this.responseMessage = null;
   }
 
-  componentWillMount() {
-    this.setState({ prompt: 1, responded: false, messages: prompts.slice(0, 1).map(p => ({ text: p })) });
-    this.componentWillReceiveProps(this.props);
+  UNSAFE_componentWillMount() {
+    this.setState({ prompt: 1, responded: false, messages: prompts.slice(0, 1).map((p) => ({ text: p })) });
+    this.UNSAFE_componentWillReceiveProps(this.props);
   }
 
-  componentWillReceiveProps(nextProps, nextState) {
-    if (!nextProps.activated) return;
+  UNSAFE_componentWillReceiveProps(nextProps) {
+    if (!nextProps.activated) {
+      return;
+    }
 
     if (!this.state.responded) {
-      this.setState(prevState => {
+      this.setState((prevState) => {
         let prompt = Math.max(prevState.prompt || 0, nextProps.activated.idx + 1, 1);
 
         return {
           prompt,
-          messages: prompts.slice(0, prompt).map(p => ({ text: p }))
+          messages: prompts.slice(0, prompt).map((p) => ({ text: p })),
         };
       });
     }
+
     if (nextProps.activated.idx > 2 && !this.state.responded) {
       this.handleSecretCreation();
     }
@@ -50,7 +50,7 @@ export default class SecretInput extends Component {
 
   handleInput(e) {
     this.setState({
-      message: e.target.value
+      message: e.target.value,
     });
   }
 
@@ -59,13 +59,11 @@ export default class SecretInput extends Component {
 
     let idx = Math.floor(secrets.length * Math.random());
     this.setState(({ messages }) => {
-      messages.push({ text: "I don't have any secrets", side: 'right' });
-      return { messages, responded: true };
+      return { messages: [...messages, { text: "I don't have any secrets", side: 'right' }], responded: true };
     });
     setTimeout(() => {
       this.setState(({ messages }) => {
-        messages.push({ text: "I'll take a guess then..." });
-        return { messages };
+        return { messages: [...messages, { text: "I'll take a guess then..." }] };
       });
     }, 150);
 
@@ -77,37 +75,45 @@ export default class SecretInput extends Component {
   onSendMessage(e) {
     e.preventDefault();
 
-    let message = e.target.querySelector(`.${style.input}`).value;
-    let bounds = this.props.activated.element.getBoundingClientRect();
-    let viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
-    let target = window.pageYOffset + bounds.top - (viewportHeight * 2) / 3;
+    const message = e.target.querySelector(`.${styles.input}`).value;
+    const bounds = this.props.activated.element.getBoundingClientRect();
+    const viewportHeight = Math.max(document.documentElement.clientHeight, window.innerHeight || 0);
+    const target = window.pageYOffset + bounds.top - (viewportHeight * 2) / 3;
+
     window.scroll({
       top: Math.max(target, window.pageYOffset),
       left: 0,
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
-    if (message.length) this.sendMessage(message);
+
+    if (message.length) {
+      this.sendMessage(message);
+    }
   }
 
   sendMessage(message) {
     this.responseMessage = { text: message, side: 'right', status: 'encrypting' };
     this.setState(({ messages }) => {
-      messages.push(this.responseMessage);
-      return { messages, responded: true };
+      return { messages: [...messages, this.responseMessage], responded: true };
     });
-    // Let the stage know what the input message is so it can transmit to encryption demo modules.
-    this.props.onSendMessage(this.responseMessage);
+    // Let the stage (asynchronously) know what the input message is so it can transmit to encryption demo modules.
+    setTimeout(() => {
+      this.props.onSendMessage(this.responseMessage);
+    }, 100);
   }
 
-  render({ displayInput, activated, message, intercept, encryptedMessage }, { messages, responded }) {
-    let visible = this.activated([
+  render() {
+    const { activated, message, intercept, encryptedMessage } = this.props;
+    const { messages, responded } = this.state;
+
+    const visible = this.activated([
       'prompt1',
       'intercept1',
       'intercept3',
       'prompt2',
       'prompt3',
       'transit',
-      'decryptedmessage'
+      'decryptedmessage',
     ]);
 
     // Set the response message status
@@ -137,34 +143,37 @@ export default class SecretInput extends Component {
     }
 
     return (
-      <Frame visible={visible} intercept={intercept} className={style.secretInput}>
+      <Frame visible={visible} intercept={intercept} className={styles.secretInput}>
         <div>
-          {messages
-            ? messages.map(msg => (
+          {messages ? (
+            <div key="log">
+              {messages.map((msg, index) => (
                 <MessageBubble
+                  key={index}
                   text={msg.encrypted || msg.text}
                   encrypted={!!msg.encrypted}
                   status={msg.status}
                   side={msg.side || 'left'}
                 />
-              ))
-            : null}
+              ))}
+            </div>
+          ) : null}
           {responded ? null : (
-            <MessageBubble side="right">
-              <form className={style.form} onSubmit={this.onSendMessage}>
+            <MessageBubble key="response" side="right">
+              <form className={styles.form} onSubmit={this.onSendMessage}>
                 <input
-                  onKeyup={this.handleInput}
-                  className={style.input}
+                  onKeyUp={this.handleInput}
+                  className={styles.input}
                   type="text"
                   placeholder="Shhh ... I won't tell anyone, promise."
-                  value={message || this.state.message || ''}
+                  defaultValue={message || this.state.message || ''}
                 />
-                <button type="submit" className={style.primary}>
+                <button type="submit" className={styles.primary}>
                   Send
                 </button>
                 <button
                   onClick={this.handleSecretCreation}
-                  className={style.generateButton}
+                  className={styles.generateButton}
                 >{`I don't have any secrets.`}</button>
               </form>
             </MessageBubble>

@@ -9,9 +9,6 @@
   .Block.is-richtext.is-richtext {
     background: transparent;
   }
-  .is-above .Nav-bar {
-    transform: translateY(-102%);
-  }
 
   .is-richtext .Block-media.is-fixed {
     position: fixed;
@@ -21,7 +18,7 @@
     background: #004e61;
   }
 
-  .init-interactive[data-encryption-explainer] {
+  [id^='scrollyteller'] {
     .is-piecemeal > .Block-content.Block-content {
       margin-bottom: 40vh;
       margin-top: 40vh;

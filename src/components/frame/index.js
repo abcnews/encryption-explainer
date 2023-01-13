@@ -1,14 +1,12 @@
-import { Component, h } from 'preact';
-import style from './style.scss';
 import cx from 'classnames';
+import React from 'react';
+import styles from './styles.scss';
 
-export default class Frame extends Component {
-  render({ className, children, visible, type, intercept }) {
-    return (
-      <div className={cx(className, style.frame, { [style.visible]: visible }, style[type])}>
-        <div>{children}</div>
-        <div className={cx(style.shroud, { [style.visible]: intercept })} />
-      </div>
-    );
-  }
+export default function Frame({ className, children, visible, type, intercept }) {
+  return (
+    <div className={cx(className, styles.frame, { [styles.visible]: visible }, styles[type])}>
+      <div>{children}</div>
+      <div className={cx(styles.shroud, { [styles.visible]: intercept })} />
+    </div>
+  );
 }
