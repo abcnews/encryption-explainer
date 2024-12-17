@@ -11,14 +11,14 @@
 		"start": "aunty serve"
 	},
 	"devDependencies": {
-		"@abcnews/aunty": "^13.2.2"
+		"@abcnews/aunty": "^15.0.3"
 	},
 	"aunty": {
 		"type": "react"
 	},
 	"dependencies": {
-		"@abcnews/env-utils": "^3.1.0",
-		"@abcnews/mount-utils": "^2.0.0",
+		"@abcnews/env-utils": "^4.0.0",
+		"@abcnews/mount-utils": "^3.0.0",
 		"@abcnews/scrollyteller": "^4.1.1",
 		"classnames": "^2.2.5",
 		"kbpgp": "^2.0.73",
