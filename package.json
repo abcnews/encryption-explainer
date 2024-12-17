@@ -17,6 +17,7 @@
 		"type": "react"
 	},
 	"dependencies": {
+		"@abcnews/dev-proxy": "^1.2.1",
 		"@abcnews/env-utils": "^4.0.0",
 		"@abcnews/mount-utils": "^3.0.0",
 		"@abcnews/scrollyteller": "^4.1.1",

@@ -5,8 +5,9 @@ import React from 'react';
 import { render } from 'react-dom';
 import Stage from './components/stage';
 import './index.scss';
+import { proxy } from '@abcnews/dev-proxy';
 
-whenOdysseyLoaded.then(() => {
+Promise.all([whenOdysseyLoaded, proxy('encryption-explainer')]).then(() => {
   const marks = selectMounts('mark', { markAsUsed: false });
 
   // Hack: Apply right-alignment to all markers
